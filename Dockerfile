@@ -12,8 +12,15 @@ FROM nginx:stable-alpine as production-stage
 # Vite builds files into an '/app/dist' folder by default
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Change Nginx default port 80 to 8080 for Cloud Run compatibility
-RUN sed -i 's/listen       80;/listen       8080;/g' /etc/nginx/conf.d/default.conf
+# 💡 THE CURE FOR 404: Write a custom default.conf that uses port 8080 AND handles Vue Router fallback
+RUN echo 'server { \
+    listen 8080; \
+    location / { \
+        root /usr/share/nginx/html; \
+        index index.html index.htm; \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
