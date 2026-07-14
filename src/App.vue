@@ -96,7 +96,7 @@
         <div class="footer-links-col">
           <h3 class="col-title">Company</h3>
           <ul class="links-list">
-            <li><a href="https://swychr.com/About">About us</a></li>
+          <li><router-link to="/about">About us</router-link></li>
             <li><a href="https://swychr.com/Career">Careers</a></li>
           </ul>
         </div>
@@ -105,7 +105,7 @@
           <h3 class="col-title">Legal</h3>
           <ul class="links-list">
             <li><a href="https://swychr.com/Privacy">Privacy notice</a></li>
-            <li><a href="https://swychr.com/Term">Terms & conditions</a></li>
+           <li><router-link to="/term">Terms &amp; conditions</router-link></li>
           </ul>
         </div>
 

@@ -134,7 +134,6 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const currentTab = ref('topup')
 
 const openFaqIndex = ref(null)
