@@ -104,7 +104,7 @@
         <div class="footer-links-col">
           <h3 class="col-title">Legal</h3>
           <ul class="links-list">
-            <li><a href="https://swychr.com/Privacy">Privacy notice</a></li>
+             <li><router-link to="/privacy">Privacy notice</router-link></li>
            <li><router-link to="/term">Terms &amp; conditions</router-link></li>
           </ul>
         </div>

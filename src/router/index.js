@@ -21,6 +21,12 @@ const router = createRouter({
      
       component: () => import('../views/TermView.vue'),
     },
+
+         {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('../views/PrivacyView.vue'),
+    },
     
   ],
 })
