@@ -1,6 +1,5 @@
 <template>
   <div class="terms-page">
-    <!-- 📄 Hero Banner Header -->
     <header class="terms-hero">
       <div class="terms-hero-container">
         <span class="terms-tagline">Terms of Use</span>
@@ -9,10 +8,9 @@
       </div>
     </header>
 
-    <!-- 📐 Split-Screen Content Chassis -->
+
     <main class="terms-split-container">
       
-      <!-- 📌 Left Sticky Sidebar Navigation (Desktop) -->
       <aside class="terms-sidebar-nav">
         <div class="sticky-wrapper">
           <h4 class="nav-header">Agreement Sections</h4>
@@ -26,7 +24,7 @@
         </div>
       </aside>
 
-      <!-- 📝 Right Legal Content Column -->
+   
       <article class="terms-content-body">
         <div class="terms-intro-block">
           <p>
@@ -37,7 +35,7 @@
           </p>
         </div>
 
-        <!-- Dynamic Content Sections -->
+
         <section v-for="(section, index) in termsSections" :key="'sec-' + index" :id="section.id" class="content-section">
           <h2 class="section-block-title">{{ section.title }}</h2>
           <div class="section-block-text" v-html="section.content"></div>
@@ -193,7 +191,7 @@ export default {
 .terms-main-title {
   font-size: 2.8rem;
   font-weight: 800;
-  color: #1a0830; /* Swychr Deep Purple Slate */
+  color: #1a0830; 
   margin: 0 0 0.75rem 0;
   letter-spacing: -0.02em;
 }
@@ -204,7 +202,7 @@ export default {
   margin: 0;
 }
 
-/* Split-Screen Main Container */
+
 .terms-split-container {
   max-width: 1200px;
   width: 100%;
@@ -215,7 +213,7 @@ export default {
   box-sizing: border-box;
 }
 
-/* Left Sticky Sidebar */
+
 .terms-sidebar-nav {
   width: 280px;
   flex-shrink: 0;
@@ -224,7 +222,7 @@ export default {
 
 .sticky-wrapper {
   position: sticky;
-  top: 100px; /* Anchors the document sidebar on scroll */
+  top: 100px; 
 }
 
 .nav-header {
@@ -257,11 +255,11 @@ export default {
 }
 
 .nav-anchor-link:hover {
-  color: #3b1565; /* Swychr Brand Purple */
+  color: #3b1565; 
   padding-left: 4px;
 }
 
-/* Right Content Body Column */
+
 .terms-content-body {
   flex: 1;
   text-align: left;
@@ -305,7 +303,6 @@ export default {
   margin: 0 0 1.5rem 0;
 }
 
-/* Nested lists and content blocks inside terms content scope */
 .section-block-text::v-html p,
 .section-block-text p {
   font-size: 1rem;
@@ -336,7 +333,7 @@ export default {
 .section-block-text::v-html li::before,
 .section-block-text li::before {
   content: "•";
-  color: #00d293; /* Brand green bullet points */
+  color: #00d293;
   font-size: 1.5rem;
   position: absolute;
   left: 0;
@@ -348,9 +345,7 @@ export default {
   font-weight: 600;
 }
 
-/* ==========================================================================
-   📱 TABLET & MOBILE RESPONSIVE ADAPTATIONS
-   ========================================================================== */
+
 @media (max-width: 850px) {
   .terms-split-container {
     flex-direction: column;
@@ -359,7 +354,7 @@ export default {
   }
 
   .terms-sidebar-nav {
-    display: none; /* Auto-collapses the navigation sidebar on smaller viewports */
+    display: none; 
   }
 
   .terms-hero {
