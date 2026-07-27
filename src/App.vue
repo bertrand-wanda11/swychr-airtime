@@ -2,7 +2,7 @@
   <div class="site-wrapper" @click="closeAllDropdowns">
     <header class="navbar">
       <div class="nav-container">
-        <div class="logo">SwyChr</div>
+        <router-link to="/" class="logo">SwyChr<span class="fron">airtime</span></router-link>
 
      
         <button class="hamburger" @click.stop="toggleMobileMenu" :class="{ 'is-active': isMenuOpen }">
@@ -220,6 +220,10 @@ function closeAllDropdowns() {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.fron{
+  color: #64748b;
 }
 
 .arrow { font-size: 0.65rem; }
