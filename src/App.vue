@@ -201,6 +201,7 @@ function closeAllDropdowns() {
   font-size: 1.8rem;
   font-weight: 800;
   color: #ffffff;
+  text-decoration: none !important;
 }
 
 .nav-menu {
