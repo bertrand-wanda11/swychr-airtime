@@ -21,7 +21,12 @@
           <!-- Country Selector Box -->
           <div class="destination-select-box" @click="openCountryModal">
             <div class="dest-icon-wrapper">
-              <span v-if="selectedCountry" class="flag-icon">{{ selectedCountry.flag }}</span>
+              <img 
+  v-if="selectedCountry" 
+  :src="`https://flagcdn.com/w40/${selectedCountry.code.toLowerCase()}.png`" 
+  :alt="selectedCountry.name"
+  class="country-flag-img"
+/>
               <span v-else class="globe-icon">🌐</span>
             </div>
             <div class="dest-info">
@@ -99,7 +104,11 @@
               class="country-item-row"
               @click="selectCountry(country)"
             >
-              <span class="country-flag">{{ country.flag }}</span>
+             <img 
+  :src="`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`" 
+  :alt="country.name"
+  class="country-flag-img"
+/>
               <div class="country-meta">
                 <span class="country-name">{{ country.name }}</span>
                 <small class="country-code">{{ country.code }} · {{ country.dialCode }}</small>
@@ -588,6 +597,17 @@ const faqData = ref([
   display: flex;
   flex-direction: column;
 }
+
+
+.country-flag-img {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
 
 .modal-handle-bar {
   width: 36px;
