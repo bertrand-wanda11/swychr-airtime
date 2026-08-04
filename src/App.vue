@@ -38,17 +38,19 @@
           </div>
 
      
-          <div class="dropdown">
-            <button class="dropbtn" @click.stop="toggleDropdown('company')">
-              Company <span class="arrow">▼</span>
-            </button>
-            <div class="dropdown-content" :class="{ show: activeDropdown === 'company' }">
-               <li><router-link to="/about">About Us</router-link></li>
-              <a href="https://swychr.com/Career">Careers</a>
-            </div>
-          </div>
+        <div class="dropdown">
+  <button class="dropbtn" @click.stop="toggleDropdown('company')">
+    Company <span class="arrow">▼</span>
+  </button>
+  <div class="dropdown-content" :class="{ show: activeDropdown === 'company' }">
 
-          <a href="https://swychr.com/support" class="nav-link">Help</a>
+    <router-link to="/about" @click="closeMobileMenu">About Us</router-link>
+    <a href="https://swychr.com/Career" target="_blank" rel="noopener" @click="closeMobileMenu">Careers</a>
+  </div>
+</div>
+
+<a href="https://swychr.com/support" class="nav-link" @click="closeMobileMenu">Help</a>
+
 
    
           <div class="dropdown">
@@ -146,12 +148,18 @@ function toggleDropdown(menuName) {
 
 function toggleMobileMenu() {
   isMenuOpen.value = !isMenuOpen.value
-  activeDropdown.value = null 
+  activeDropdown.value = null
 }
 
 function closeAllDropdowns() {
   activeDropdown.value = null
   isMenuOpen.value = false
+}
+
+
+function closeMobileMenu() {
+  isMenuOpen.value = false
+  activeDropdown.value = null
 }
 </script>
 
@@ -302,8 +310,48 @@ function closeAllDropdowns() {
   }
 
   .nav-menu.mobile-open { display: flex; }
-  .dropdown-content { position: static; width: 100%; text-align: center; box-shadow: none; background: rgba(255,255,255,0.05); }
-  .dropdown-content a { color: white; }
+  
+  .dropdown {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-content {
+    position: static !important;
+    width: 100% !important;
+    text-align: center !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    padding: 8px 0 !important;
+    border-radius: 8px !important;
+    margin-top: 6px !important;
+    display: none;
+  }
+
+  .dropdown-content.show {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  
+  .dropdown-content a,
+  .dropdown-content router-link {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    text-decoration: none !important;
+    list-style: none !important;
+    display: block !important;
+    padding: 8px 12px !important;
+  }
+
+  .dropdown-content li {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+
   .nav-link, .dropbtn { width: 100%; justify-content: center; padding: 0.5rem 0; }
   .signin-btn { width: 80%; text-align: center; margin: 0 auto; }
 }
