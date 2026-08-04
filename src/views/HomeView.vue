@@ -5,10 +5,10 @@
     <div class="hero-container">
       <div class="text-block">
         <h1 class="hero-title">The swiftest way to send mobile top-up worldwide</h1>
-        <p class="hero-subtitle">99% of mobile recharges sent online with SwyChr arrive in 3 seconds.</p>
+        <p class="hero-subtitle">99% of mobile recharges sent online with SwyChr hub arrive in 3 seconds.</p>
         
         <div class="services-toggle-container">
-          <p class="services-label">New Services to send on SwyChr</p>
+          <p class="services-label">New Services to send on SwyChr hub</p>
           <div class="toggle-buttons-row">
             
               <button 
@@ -99,7 +99,7 @@
 
 <section class="faq-section">
     <div class="faq-container">
-      <h2 class="faq-main-title">Have a question about sending mobile recharge with SwyChr?</h2>
+      <h2 class="faq-main-title">Have a question about sending mobile recharge with SwyChr hub?</h2>
 
 
       <div class="faq-accordion-list">
