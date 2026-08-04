@@ -2,7 +2,7 @@
   <div class="site-wrapper" @click="closeAllDropdowns">
     <header class="navbar">
       <div class="nav-container">
-        <router-link to="/" class="logo">SwyChr<span class="fron">airtime</span></router-link>
+        <router-link to="/" class="logo">SwyChr<span class="fron">hub</span></router-link>
 
      
         <button class="hamburger" @click.stop="toggleMobileMenu" :class="{ 'is-active': isMenuOpen }">
@@ -113,7 +113,7 @@
           <h3 class="col-title">Help</h3>
           <ul class="links-list">
             <li><a href="https://swychr.com/support">Support centre</a></li>
-         
+            <li><router-link to="/download">Download</router-link></li>
           </ul>
         </div>
 
@@ -122,13 +122,10 @@
       <div class="footer-bottom-ribbon">
         <div class="ribbon-container">
           
-          <div class="security-info">
-            <span class="trustwave-logo">🛡️ Trustwave</span>
-            <span class="security-text">Protected by Trustwave. Secure 128-bit SSL Encrypted.</span>
-          </div>
+
 
           <div class="copyright-statement">
-            <p>&copy; SwyChr 2026. All rights reserved.</p>
+            <p>&copy; Swychr Technology Africa Limited. </p>
           </div>
 
         </div>
