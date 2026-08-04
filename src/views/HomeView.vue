@@ -44,22 +44,82 @@
           </div>
         </div>
 
-        <div class="topup-card">
-          <h2 class="card-title">
-            {{ currentTab === 'topup' ? 'Ready to send a top-up?' : 'Ready to buy a voucher?' }}
-          </h2>
-          <div class="input-wrapper">
-            <span class="search-icon">🔍</span>
-            <input 
-              type="text" 
-              :placeholder="currentTab === 'topup' ? 'Enter number' : 'Search vouchers...'" 
-              class="phone-input" 
-            />
+
+<div class="topup-card">
+  <div class="card-header">
+    <span class="section-label">DESTINATION</span>
+  </div>
+
+
+  <div class="destination-select-box" @click="openCountryModal">
+    <div class="dest-icon-wrapper">
+      <span v-if="selectedCountry" class="flag-icon">{{ selectedCountry.flag }}</span>
+      <span v-else class="globe-icon">🌐</span>
+    </div>
+    <div class="dest-info">
+      <small>Select Country</small>
+      <strong v-if="selectedCountry">{{ selectedCountry.name }} ({{ selectedCountry.dialCode }})</strong>
+      <span v-else class="placeholder-text">Tap to choose destination</span>
+    </div>
+    <div class="dropdown-chevron">▼</div>
+  </div>
+
+
+  <button 
+    class="cta-button" 
+    :disabled="!selectedCountry"
+    @click="handleStartTopup"
+  >
+    {{ selectedCountry ? 'Continue to Top-up' : 'Select Destination' }}
+  </button>
+</div>
+
+
+<Teleport to="body">
+  <div v-if="isModalOpen" class="country-modal-overlay" @click.self="closeCountryModal">
+    <div class="country-modal-card">
+      <div class="modal-handle-bar"></div>
+      
+      <div class="modal-header">
+        <h3>Select Country</h3>
+        <button class="close-modal-btn" @click="closeCountryModal">✕</button>
+      </div>
+
+  
+      <div class="modal-search-wrapper">
+        <span class="search-lens">🔍</span>
+        <input 
+          type="text" 
+          v-model="countrySearchQuery" 
+          placeholder="Search countries..." 
+          class="modal-search-input"
+          ref="searchInputRef"
+        />
+      </div>
+
+  
+      <div class="country-list-scroll">
+        <div 
+          v-for="country in filteredCountries" 
+          :key="country.code" 
+          class="country-item-row"
+          @click="selectCountry(country)"
+        >
+          <span class="country-flag">{{ country.flag }}</span>
+          <div class="country-meta">
+            <span class="country-name">{{ country.name }}</span>
+            <small class="country-code">{{ country.code }} · {{ country.dialCode }}</small>
           </div>
-          <button class="cta-button">
-            {{ currentTab === 'topup' ? 'Start top-up' : 'View vouchers' }}
-          </button>
+          <span class="item-arrow">›</span>
         </div>
+
+        <div v-if="filteredCountries.length === 0" class="no-countries-found">
+          No countries found matching "{{ countrySearchQuery }}"
+        </div>
+      </div>
+    </div>
+  </div>
+</Teleport>
 
       </div>
     </div>
@@ -141,6 +201,60 @@ const openFaqIndex = ref(null)
 function toggleFaq(index) {
 
   openFaqIndex.value = openFaqIndex.value === index ? null : index
+}
+
+const isModalOpen = ref(false)
+const countrySearchQuery = ref('')
+const selectedCountry = ref(null)
+const searchInputRef = ref(null)
+
+// Country Dataset
+const countries = ref([
+  { name: 'Afghanistan', code: 'AF', dialCode: '+93', flag: '🇦🇫' },
+  { name: 'Albania', code: 'AL', dialCode: '+355', flag: '🇦🇱' },
+  { name: 'Algeria', code: 'DZ', dialCode: '+213', flag: '🇩🇿' },
+  { name: 'Cameroon', code: 'CM', dialCode: '+237', flag: '🇨🇲' },
+  { name: 'Ghana', code: 'GH', dialCode: '+233', flag: '🇬🇭' },
+  { name: 'Kenya', code: 'KE', dialCode: '+254', flag: '🇰🇪' },
+  { name: 'Nigeria', code: 'NG', dialCode: '+234', flag: '🇳🇬' },
+  { name: 'South Africa', code: 'ZA', dialCode: '+27', flag: '🇿🇦' },
+  { name: 'United Kingdom', code: 'GB', dialCode: '+44', flag: '🇬🇧' },
+  { name: 'United States', code: 'US', dialCode: '+1', flag: '🇺🇸' }
+])
+
+// Computed property for search filtering
+const filteredCountries = computed(() => {
+  if (!countrySearchQuery.value) return countries.value
+  const q = countrySearchQuery.value.toLowerCase()
+  return countries.value.filter(c => 
+    c.name.toLowerCase().includes(q) || 
+    c.code.toLowerCase().includes(q) || 
+    c.dialCode.includes(q)
+  )
+})
+
+// Modal Action Handlers
+const openCountryModal = () => {
+  isModalOpen.value = true
+  nextTick(() => {
+    if (searchInputRef.value) searchInputRef.value.focus()
+  })
+}
+
+const closeCountryModal = () => {
+  isModalOpen.value = false
+  countrySearchQuery.value = ''
+}
+
+const selectCountry = (country) => {
+  selectedCountry.value = country
+  closeCountryModal()
+}
+
+const handleStartTopup = () => {
+  if (selectedCountry.value) {
+    alert(`Proceeding to top-up for ${selectedCountry.value.name} (${selectedCountry.value.dialCode})`)
+  }
 }
 
 const faqData = ref([
@@ -350,70 +464,225 @@ const faqData = ref([
   border-color: #1e293b;
 }
 
-
 .topup-card {
   background: #ffffff;
-  border-radius: 28px;
-  padding: 2.5rem;
+  padding: 2rem;
+  border-radius: 24px;
   width: 100%;
   max-width: 520px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-.card-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 1.8rem;
+.card-header {
+  margin-bottom: 12px;
+  text-align: left;
 }
 
-.input-wrapper {
-  position: relative;
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #8e8e93;
+}
+
+.destination-select-box {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.search-icon {
-  position: absolute;
-  left: 22px;
-  color: #64748b;
-  font-size: 1.2rem;
-}
-
-.phone-input {
-  width: 100%;
-  padding: 1.2rem 1rem 1.2rem 60px;
-  font-size: 1.15rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 40px;
-  outline: none;
-  background-color: #f8fafc;
-  transition: all 0.2s;
-}
-
-.phone-input:focus {
-  border-color: #b042c9;
-  background-color: #ffffff;
-}
-
-.cta-button {
-  width: 100%;
-  padding: 1.2rem;
-  background-color:  #b042c9; 
-  color:  #ffffff;
-  font-weight: 800;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 40px;
+  gap: 14px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px 18px;
   cursor: pointer;
-  transition: transform 0.1s, background-color 0.2s;
+  margin-bottom: 20px;
+  transition: border-color 0.2s, background 0.2s;
 }
 
-.cta-button:hover {
-  background-color: #13113c;
-  transform: translateY(-1px);
+.destination-select-box:hover {
+  border-color: #b042c9;
+  background: #ffffff;
+}
+
+.dest-icon-wrapper {
+  width: 42px;
+  height: 42px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.dest-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.dest-info small {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.dest-info strong {
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.placeholder-text {
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.dropdown-chevron {
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+/* ── Modal Overlay & Card ────────────────────────────────────────────── */
+.country-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.country-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-handle-bar {
+  width: 36px;
+  height: 4px;
+  background: #cbd5e1;
+  border-radius: 100px;
+  margin: 0 auto 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.close-modal-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  color: #64748b;
+}
+
+.modal-search-wrapper {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-lens {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+}
+
+.modal-search-input {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.modal-search-input:focus {
+  border-color: #b042c9;
+  background: #ffffff;
+}
+
+.country-list-scroll {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.country-item-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.country-item-row:hover {
+  background: #f8fafc;
+}
+
+.country-flag {
+  font-size: 1.5rem;
+}
+
+.country-meta {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.country-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.country-code {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.item-arrow {
+  color: #cbd5e1;
+  font-size: 1.2rem;
+}
+
+.no-countries-found {
+  padding: 24px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
 
