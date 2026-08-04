@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="full-bleed-hero">
       <div class="hero-container">
-        <!-- Hero Text Column -->
+        
         <div class="text-block">
           <span class="badge">FAST & SECURE</span>
           <h1>Send Airtime & Bundles Globally</h1>
@@ -397,7 +397,7 @@ const faqData = ref([
 
 .badge {
   background: rgba(255, 255, 255, 0.12);
-  color: #00e676;
+  color: #b042c9;
   padding: 6px 14px;
   border-radius: 100px;
   font-size: 0.75rem;
