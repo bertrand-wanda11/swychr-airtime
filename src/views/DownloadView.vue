@@ -5,7 +5,7 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <span class="app-badge">📱 Official Mobile App</span>
-          <h1>Get SwyChrairtime On Your Mobile Device</h1>
+          <h1>Get SwyChr hub On Your Mobile Device</h1>
           <p class="hero-desc">
             Send airtime, bundle data, and top up mobile numbers globally in seconds. Enjoy exclusive in-app discounts, automated recurring top-ups, and instant notifications.
           </p>
@@ -48,7 +48,7 @@
           <div class="mockup-card">
             <div class="mockup-header">
               <span class="status-dot"></span>
-              <span class="mockup-title">SwyChrairtime App</span>
+              <span class="mockup-title">SwyChr hub  App</span>
             </div>
             <div class="mockup-body">
               <div class="app-screen-item highlight">

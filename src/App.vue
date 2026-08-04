@@ -2,7 +2,7 @@
   <div class="site-wrapper" @click="closeAllDropdowns">
     <header class="navbar">
       <div class="nav-container">
-        <router-link to="/" class="logo">SwyChr<span class="fron">hub</span></router-link>
+        <router-link to="/" class="logo">SwyChr  <span class="fron">hub</span></router-link>
 
      
         <button class="hamburger" @click.stop="toggleMobileMenu" :class="{ 'is-active': isMenuOpen }">
@@ -43,7 +43,7 @@
               Company <span class="arrow">▼</span>
             </button>
             <div class="dropdown-content" :class="{ show: activeDropdown === 'company' }">
-              <a href="https://swychr.com/About">About Us</a>
+               <li><router-link to="/about">About Us</router-link></li>
               <a href="https://swychr.com/Career">Careers</a>
             </div>
           </div>
@@ -74,7 +74,7 @@
       <div class="footer-top-columns">
         
         <div class="footer-brand-col">
-          <div class="footer-logo">SwyChr</div>
+          <div class="footer-logo">SwyChr hub</div>
           <p class="footer-tagline">A little goes a long way <span class="sparkle-icon">✨</span></p>
           
           <div class="social-icons-row">

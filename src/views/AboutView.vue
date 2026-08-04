@@ -3,10 +3,10 @@
     <!-- Hero Section -->
     <section class="about-hero">
       <div class="container">
-        <span class="hero-badge">About SwyChrairtime</span>
+        <span class="hero-badge">About SwyChr hub</span>
         <h1>Connecting Loved Ones, Across Borders in Seconds</h1>
         <p class="hero-sub">
-          SwyChrairtime powers instant global mobile top-ups and data refills, enabling families, businesses, and communities to stay seamlessly connected worldwide.
+          SwyChr hub powers instant global mobile top-ups and data refills, enabling families, businesses, and communities to stay seamlessly connected worldwide.
         </p>
       </div>
     </section>
@@ -56,7 +56,7 @@
     <!-- Why Choose Us -->
     <section class="why-us-section">
       <div class="container">
-        <h2 class="section-title">Why Millions Trust SwyChrairtime</h2>
+        <h2 class="section-title">Why Millions Trust SwyChr hub</h2>
         <div class="features-grid">
           <div class="feature-item">
             <div class="feat-icon">⚡</div>
