@@ -120,7 +120,6 @@
 <script setup>
 import { ref, computed, nextTick } from 'vue'
 
-const currentTab = ref('topup')
 const openFaqIndex = ref(null)
 
 function toggleFaq(index) {
@@ -133,17 +132,110 @@ const countrySearchQuery = ref('')
 const selectedCountry = ref(null)
 const searchInputRef = ref(null)
 
+// 🌍 Expanded 100+ Global Countries List
 const countries = ref([
   { name: 'Afghanistan', code: 'AF', dialCode: '+93', flag: '🇦🇫' },
   { name: 'Albania', code: 'AL', dialCode: '+355', flag: '🇦🇱' },
   { name: 'Algeria', code: 'DZ', dialCode: '+213', flag: '🇩🇿' },
+  { name: 'Andorra', code: 'AD', dialCode: '+376', flag: '🇦🇩' },
+  { name: 'Angola', code: 'AO', dialCode: '+244', flag: '🇦🇴' },
+  { name: 'Argentina', code: 'AR', dialCode: '+54', flag: '🇦🇷' },
+  { name: 'Armenia', code: 'AM', dialCode: '+374', flag: '🇦🇲' },
+  { name: 'Australia', code: 'AU', dialCode: '+61', flag: '🇦🇺' },
+  { name: 'Austria', code: 'AT', dialCode: '+43', flag: '🇦🇹' },
+  { name: 'Azerbaijan', code: 'AZ', dialCode: '+994', flag: '🇦🇿' },
+  { name: 'Bahamas', code: 'BS', dialCode: '+1-242', flag: '🇧🇸' },
+  { name: 'Bahrain', code: 'BH', dialCode: '+973', flag: '🇧🇭' },
+  { name: 'Bangladesh', code: 'BD', dialCode: '+880', flag: '🇧🇩' },
+  { name: 'Barbados', code: 'BB', dialCode: '+1-246', flag: '🇧🇧' },
+  { name: 'Belgium', code: 'BE', dialCode: '+32', flag: '🇧🇪' },
+  { name: 'Belize', code: 'BZ', dialCode: '+501', flag: '🇧🇿' },
+  { name: 'Benin', code: 'BJ', dialCode: '+229', flag: '🇧🇯' },
+  { name: 'Bolivia', code: 'BO', dialCode: '+591', flag: '🇧🇴' },
+  { name: 'Brazil', code: 'BR', dialCode: '+55', flag: '🇧🇷' },
+  { name: 'Bulgaria', code: 'BG', dialCode: '+359', flag: '🇧🇬' },
+  { name: 'Burkina Faso', code: 'BF', dialCode: '+226', flag: '🇧🇫' },
+  { name: 'Burundi', code: 'BI', dialCode: '+257', flag: '🇧🇮' },
+  { name: 'Cambodia', code: 'KH', dialCode: '+855', flag: '🇰🇭' },
   { name: 'Cameroon', code: 'CM', dialCode: '+237', flag: '🇨🇲' },
+  { name: 'Canada', code: 'CA', dialCode: '+1', flag: '🇨🇦' },
+  { name: 'Chad', code: 'TD', dialCode: '+235', flag: '🇹🇩' },
+  { name: 'Chile', code: 'CL', dialCode: '+56', flag: '🇨🇱' },
+  { name: 'China', code: 'CN', dialCode: '+86', flag: '🇨🇳' },
+  { name: 'Colombia', code: 'CO', dialCode: '+57', flag: '🇨🇴' },
+  { name: 'Congo (DRC)', code: 'CD', dialCode: '+243', flag: '🇨🇩' },
+  { name: 'Costa Rica', code: 'CR', dialCode: '+506', flag: '🇨🇷' },
+  { name: 'Cote d\'Ivoire', code: 'CI', dialCode: '+225', flag: '🇨🇮' },
+  { name: 'Croatia', code: 'HR', dialCode: '+385', flag: '🇭🇷' },
+  { name: 'Cyprus', code: 'CY', dialCode: '+357', flag: '🇨🇾' },
+  { name: 'Denmark', code: 'DK', dialCode: '+45', flag: '🇩🇰' },
+  { name: 'Dominican Republic', code: 'DO', dialCode: '+1-809', flag: '🇩🇴' },
+  { name: 'Ecuador', code: 'EC', dialCode: '+593', flag: '🇪🇨' },
+  { name: 'Egypt', code: 'EG', dialCode: '+20', flag: '🇪🇬' },
+  { name: 'El Salvador', code: 'SV', dialCode: '+503', flag: '🇸🇻' },
+  { name: 'Ethiopia', code: 'ET', dialCode: '+251', flag: '🇪🇹' },
+  { name: 'Finland', code: 'FI', dialCode: '+358', flag: '🇫🇮' },
+  { name: 'France', code: 'FR', dialCode: '+33', flag: '🇫🇷' },
+  { name: 'Gabon', code: 'GA', dialCode: '+241', flag: '🇬🇦' },
+  { name: 'Gambia', code: 'GM', dialCode: '+220', flag: '🇬🇲' },
+  { name: 'Georgia', code: 'GE', dialCode: '+995', flag: '🇬🇪' },
+  { name: 'Germany', code: 'DE', dialCode: '+49', flag: '🇩🇪' },
   { name: 'Ghana', code: 'GH', dialCode: '+233', flag: '🇬🇭' },
+  { name: 'Greece', code: 'GR', dialCode: '+30', flag: '🇬🇷' },
+  { name: 'Guatemala', code: 'GT', dialCode: '+502', flag: '🇬🇹' },
+  { name: 'Guinea', code: 'GN', dialCode: '+224', flag: '🇬🇳' },
+  { name: 'Haiti', code: 'HT', dialCode: '+509', flag: '🇭🇹' },
+  { name: 'Honduras', code: 'HN', dialCode: '+504', flag: '🇭🇳' },
+  { name: 'Hungary', code: 'HU', dialCode: '+36', flag: '🇭🇺' },
+  { name: 'India', code: 'IN', dialCode: '+91', flag: '🇮🇳' },
+  { name: 'Indonesia', code: 'ID', dialCode: '+62', flag: '🇮🇩' },
+  { name: 'Iraq', code: 'IQ', dialCode: '+964', flag: '🇮🇶' },
+  { name: 'Ireland', code: 'IE', dialCode: '+353', flag: '🇮🇪' },
+  { name: 'Israel', code: 'IL', dialCode: '+972', flag: '🇮🇱' },
+  { name: 'Italy', code: 'IT', dialCode: '+39', flag: '🇮🇹' },
+  { name: 'Jamaica', code: 'JM', dialCode: '+1-876', flag: '🇯🇲' },
+  { name: 'Japan', code: 'JP', dialCode: '+81', flag: '🇯🇵' },
+  { name: 'Jordan', code: 'JO', dialCode: '+962', flag: '🇯🇴' },
   { name: 'Kenya', code: 'KE', dialCode: '+254', flag: '🇰🇪' },
+  { name: 'Kuwait', code: 'KW', dialCode: '+965', flag: '🇰🇼' },
+  { name: 'Lebanon', code: 'LB', dialCode: '+961', flag: '🇱🇧' },
+  { name: 'Liberia', code: 'LR', dialCode: '+231', flag: '🇱🇷' },
+  { name: 'Madagascar', code: 'MG', dialCode: '+261', flag: '🇲🇬' },
+  { name: 'Malaysia', code: 'MY', dialCode: '+60', flag: '🇲🇾' },
+  { name: 'Mali', code: 'ML', dialCode: '+223', flag: '🇲🇱' },
+  { name: 'Mexico', code: 'MX', dialCode: '+52', flag: '🇲🇽' },
+  { name: 'Morocco', code: 'MA', dialCode: '+212', flag: '🇲🇦' },
+  { name: 'Mozambique', code: 'MZ', dialCode: '+258', flag: '🇲🇿' },
+  { name: 'Nepal', code: 'NP', dialCode: '+977', flag: '🇳🇵' },
+  { name: 'Netherlands', code: 'NL', dialCode: '+31', flag: '🇳🇱' },
+  { name: 'New Zealand', code: 'NZ', dialCode: '+64', flag: '🇳🇿' },
+  { name: 'Nicaragua', code: 'NI', dialCode: '+505', flag: '🇳🇮' },
+  { name: 'Niger', code: 'NE', dialCode: '+227', flag: '🇳🇪' },
   { name: 'Nigeria', code: 'NG', dialCode: '+234', flag: '🇳🇬' },
+  { name: 'Norway', code: 'NO', dialCode: '+47', flag: '🇳🇴' },
+  { name: 'Oman', code: 'OM', dialCode: '+968', flag: '🇴🇲' },
+  { name: 'Pakistan', code: 'PK', dialCode: '+92', flag: '🇵🇰' },
+  { name: 'Panama', code: 'PA', dialCode: '+507', flag: '🇵🇦' },
+  { name: 'Paraguay', code: 'PY', dialCode: '+595', flag: '🇵🇾' },
+  { name: 'Peru', code: 'PE', dialCode: '+51', flag: '🇵🇪' },
+  { name: 'Philippines', code: 'PH', dialCode: '+63', flag: '🇵🇭' },
+  { name: 'Poland', code: 'PL', dialCode: '+48', flag: '🇵🇱' },
+  { name: 'Portugal', code: 'PT', dialCode: '+351', flag: '🇵🇹' },
+  { name: 'Qatar', code: 'QA', dialCode: '+974', flag: '🇶🇦' },
+  { name: 'Romania', code: 'RO', dialCode: '+40', flag: '🇷🇴' },
+  { name: 'Rwanda', code: 'RW', dialCode: '+250', flag: '🇷🇼' },
+  { name: 'Saudi Arabia', code: 'SA', dialCode: '+966', flag: '🇸🇦' },
+  { name: 'Senegal', code: 'SN', dialCode: '+221', flag: '🇸🇳' },
+  { name: 'Sierra Leone', code: 'SL', dialCode: '+232', flag: '🇸🇱' },
   { name: 'South Africa', code: 'ZA', dialCode: '+27', flag: '🇿🇦' },
+  { name: 'Spain', code: 'ES', dialCode: '+34', flag: '🇪🇸' },
+  { name: 'Sri Lanka', code: 'LK', dialCode: '+94', flag: '🇱🇰' },
+  { name: 'Tanzania', code: 'TZ', dialCode: '+255', flag: '🇹🇿' },
+  { name: 'Uganda', code: 'UG', dialCode: '+256', flag: '🇺🇬' },
   { name: 'United Kingdom', code: 'GB', dialCode: '+44', flag: '🇬🇧' },
-  { name: 'United States', code: 'US', dialCode: '+1', flag: '🇺🇸' }
+  { name: 'United States', code: 'US', dialCode: '+1', flag: '🇺🇸' },
+  { name: 'Zambia', code: 'ZM', dialCode: '+260', flag: '🇿🇲' },
+  { name: 'Zimbabwe', code: 'ZW', dialCode: '+263', flag: '🇿🇼' }
 ])
 
 const filteredCountries = computed(() => {
@@ -179,7 +271,7 @@ const handleStartTopup = () => {
   }
 }
 
-
+// ❓ Expanded 15 FAQ Questions & Answers
 const faqData = ref([
   {
     question: "What is SwyChr?",
@@ -191,18 +283,90 @@ const faqData = ref([
   {
     question: "What is an international top-up?",
     answer: [
-      "An international top-up is a service that allows you to send mobile credit or data balances to a phone line registered in a completely different country."
+      "An international top-up is a service that allows you to send mobile credit or data balances to a phone line registered in a completely different country.",
+      "Once purchased, the airtime credit is processed instantly and added safely directly to the recipient's phone number balance profile abroad."
     ]
   },
   {
     question: "Can I send mobile recharges from abroad?",
     answer: [
-      "Yes, absolutely! SwyChr is built exactly for cross-border needs. You can safely send a top-up balance to over 140 supported global destinations in seconds."
+      "Yes, absolutely! SwyChr is built exactly for cross-border needs. You can be anywhere in the world and safely send a top-up balance to over 140 supported global destinations in seconds."
+    ]
+  },
+  {
+    question: "How to send a top-up online?",
+    answer: [
+      "It only takes three simple steps: select your destination country, enter the target phone number, select your desired top-up package, and complete payment."
+    ]
+  },
+  {
+    question: "Can I also send data bundles?",
+    answer: [
+      "Yes! Depending on the regional mobile operator assigned to the network line number you input, you can choose to send standard airtime credits or specific data-bundle packages."
+    ]
+  },
+  {
+    question: "How fast is the airtime delivered?",
+    answer: [
+      "Most top-ups are processed and delivered instantly in less than 10 seconds. The recipient receives a text message confirmation directly from their mobile operator."
+    ]
+  },
+  {
+    question: "What payment methods are supported?",
+    answer: [
+      "We accept all major credit and debit cards (Visa, Mastercard, American Express), digital wallets, and local bank payment methods depending on your region."
+    ]
+  },
+  {
+    question: "Are there any hidden fees when sending top-ups?",
+    answer: [
+      "No. SwyChr practices 100% rate transparency. The total amount displayed during checkout is the final cost—there are no extra hidden charges."
+    ]
+  },
+  {
+    question: "What happens if I enter the wrong phone number?",
+    answer: [
+      "Because top-ups are processed automatically with mobile carriers in real-time, completed transfers cannot be reversed. Please double-check the recipient phone number before confirming payment."
+    ]
+  },
+  {
+    question: "Do I need to create an account to send a top-up?",
+    answer: [
+      "You can complete guest top-ups instantly, but creating a free SwyChr account allows you to save recipient contacts, view transaction history, and earn loyalty rewards."
+    ]
+  },
+  {
+    question: "Which mobile operators are supported?",
+    answer: [
+      "We connect directly with over 600 global mobile carriers including MTN, Airtel, Orange, Vodafone, Digicel, Safaricom, Globe, Telcel, and T-Mobile."
+    ]
+  },
+  {
+    question: "Can I set up automatic recurring top-ups?",
+    answer: [
+      "Yes! Inside the official SwyChr mobile app, you can schedule weekly or monthly automated recharges so your loved ones never run out of data or airtime."
+    ]
+  },
+  {
+    question: "Is my payment information safe on SwyChr?",
+    answer: [
+      "Yes. SwyChr utilizes 256-bit SSL encryption and strict PCI-DSS banking compliance standards to ensure all financial credentials remain completely protected."
+    ]
+  },
+  {
+    question: "What should I do if the recipient did not receive their top-up?",
+    answer: [
+      "First check your email receipt to verify the phone number. If correct, wait 5 minutes for carrier network delays. If still unreceived, contact our 24/7 support team with your reference ID."
+    ]
+  },
+  {
+    question: "How do I contact SwyChr customer support?",
+    answer: [
+      "You can reach our 24/7 support team anytime via live chat inside our app, through the Help page, or by emailing support@swychr.com."
     ]
   }
 ])
 </script>
-
 
 <style scoped>
 .home-view-wrapper {
